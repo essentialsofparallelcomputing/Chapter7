@@ -1,0 +1,2 @@
+HelloOpenMP:	HelloOpenMP.c
+	${CC} -fopenmp -o HelloOpenMP HelloOpenMP.c
