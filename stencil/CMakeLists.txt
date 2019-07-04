@@ -1,0 +1,45 @@
+cmake_minimum_required (VERSION 3.0)
+project (stencil)
+
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules/")
+
+set (CMAKE_C_STANDARD 99)
+
+if (NOT VECTOR_TYPE)
+   set (VECTOR_TYPE full_vectorize)
+endif (NOT VECTOR_TYPE)
+if (VECTOR_TYPE STREQUAL "none")
+   set (VECTOR_TYPE none)
+endif (VECTOR_TYPE STREQUAL "none")
+if (VECTOR_TYPE STREQUAL "default")
+   set (VECTOR_TYPE default)
+endif (VECTOR_TYPE STREQUAL "default")
+
+# Set vectorization flags for a few compilers
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -O3")
+if ("${CMAKE_C_COMPILER_ID}" STREQUAL "Clang") # using Clang
+   set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fstrict-aliasing -fnovectorize\
+       -march=native -mtune=native")
+elseif ("${CMAKE_C_COMPILER_ID}" STREQUAL "GNU") # using GCC
+   set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -march=native -mtune=native")
+   set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fstrict-aliasing -fno-tree-vectorize -fopenmp")
+elseif ("${CMAKE_C_COMPILER_ID}" STREQUAL "Intel") # using Intel C
+   set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -no-vec -ansi-alias -xHost -qopenmp")
+elseif (CMAKE_C_COMPILER_ID MATCHES "MSVC")
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -openmp:experimental")
+elseif (CMAKE_C_COMPILER_ID MATCHES "XL")
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -qalias=ansi -qsimd=noauto -qopenmp")
+elseif (CMAKE_C_COMPILER_ID MATCHES "Cray")
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -h restrict=a -h vector0")
+endif()
+
+find_package(likwid)
+
+# Adds build target of stencil with source code files
+add_executable(stencil stencil.c timer.c timer.h malloc2D.c malloc2D.h)
+target_include_directories(stencil PUBLIC ${LIKWID_INCLUDE_DIRS})
+target_link_libraries(stencil PUBLIC ${LIKWID_LIBRARIES})
+
+# Cleanup
+add_custom_target(distclean COMMAND rm -rf CMakeCache.txt CMakeFiles
+                  Makefile cmake_install.cmake stencil.dSYM ipo_out.optrpt)

@@ -1,0 +1,41 @@
+find_path(LIKWID_INCLUDE_DIR likwid.h
+    HINTS ${LIKWID_INSTALL_ROOT}/include)
+find_path(LIKWID_INCLUDE_DIR
+    NAMES "likwid.h"
+    PATH_SUFFIXES "include" "include/likwid")
+find_program(LIKWID_BIN likwid-perfctr)
+find_path(LIKWID_INCLUDE_DIR likwid.h
+    HINTS ${LIKWID_BIN}/../../include)
+#message("LIKWID_INCLUDE_DIR is ${LIKWID_INCLUDE_DIR}")
+
+find_library(LIKWID_LIBRARY likwid
+    HINTS ${LIKWID_INSTALL_ROOT}/lib)
+find_library(LIKWID_LIBRARY
+    NAMES "likwid"
+    PATH_SUFFIXES "lib" "lib32" "lib64")
+find_library(LIKWID_LIBRARY likwid
+    HINTS ${LIKWID_BIN}/../..
+    PATH_SUFFIXES "lib" "lib32" "lib64")
+#message("LIKWID_LIBRARY is ${LIKWID_LIBRARY}")
+
+
+IF (LIKWID_INCLUDE_DIR AND LIKWID_LIBRARY)
+    SET(LIKWID_FOUND TRUE)
+ENDIF (LIKWID_INCLUDE_DIR AND LIKWID_LIBRARY)
+
+IF (LIKWID_FOUND)
+    set(LIKWID_INCLUDE_DIRS ${LIKWID_INCLUDE_DIR})
+    set(LIKWID_LIBRARIES ${LIKWID_LIBRARY})
+
+    # set HAVE_LIKWID for config.h
+    add_definitions(-DHAVE_LIKWID -DLIKWID_PERFMON)
+
+    IF (NOT LIKWID_FIND_QUIETLY)
+        MESSAGE(STATUS "Found LIKWID include: ${LIKWID_INCLUDE_DIR}")
+        MESSAGE(STATUS "Found LIKWID library: ${LIKWID_LIBRARY}")
+    ENDIF (NOT LIKWID_FIND_QUIETLY)
+ELSE (LIKWID_FOUND)
+    #   IF (LIKWID_FIND_REQUIRED)
+        MESSAGE(FATAL_ERROR "Could not find Likwid")
+    #    ENDIF (LIKWID_FIND_REQUIRED)
+ENDIF (LIKWID_FOUND)
