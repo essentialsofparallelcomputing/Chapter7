@@ -23,6 +23,8 @@ if ("${CMAKE_C_COMPILER_ID}" STREQUAL "Clang") # using Clang
 elseif ("${CMAKE_C_COMPILER_ID}" STREQUAL "GNU") # using GCC
    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -march=native -mtune=native")
    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fstrict-aliasing -fno-tree-vectorize -fopenmp")
+   set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fopt-info-loop-optimized -fopt-info-loop-missed")
+   set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fopt-info-omp-optimized -fopt-info-omp-missed")
 elseif ("${CMAKE_C_COMPILER_ID}" STREQUAL "Intel") # using Intel C
    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -no-vec -ansi-alias -xHost -qopenmp")
 elseif (CMAKE_C_COMPILER_ID MATCHES "MSVC")
@@ -33,12 +35,12 @@ elseif (CMAKE_C_COMPILER_ID MATCHES "Cray")
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -h restrict=a -h vector0")
 endif()
 
-find_package(likwid)
-
 # Adds build target of stencil with source code files
 add_executable(stencil stencil.c timer.c timer.h malloc2D.c malloc2D.h)
-target_include_directories(stencil PUBLIC ${LIKWID_INCLUDE_DIRS})
-target_link_libraries(stencil PUBLIC ${LIKWID_LIBRARIES})
+
+add_executable(stencil_opt1 stencil_opt1.c timer.c timer.h malloc2D.c malloc2D.h)
+
+add_executable(stencil_opt2 stencil_opt2.c timer.c timer.h malloc2D.c malloc2D.h)
 
 # Cleanup
 add_custom_target(distclean COMMAND rm -rf CMakeCache.txt CMakeFiles
