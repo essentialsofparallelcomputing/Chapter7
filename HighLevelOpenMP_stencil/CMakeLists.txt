@@ -44,6 +44,8 @@ add_executable(stencil_opt4 stencil_opt4.c timer.c timer.h malloc2D.c malloc2D.h
 
 add_executable(stencil_opt5 stencil_opt5.c timer.c timer.h malloc2D.c malloc2D.h)
 
+add_executable(stencil_opt6 stencil_opt6.c timer.c timer.h malloc2D.c malloc2D.h)
+
 # Cleanup
 add_custom_target(distclean COMMAND rm -rf CMakeCache.txt CMakeFiles
                   Makefile cmake_install.cmake stencil.dSYM ipo_out.optrpt)
