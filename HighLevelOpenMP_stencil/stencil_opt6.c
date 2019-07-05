@@ -33,27 +33,20 @@ int main(int argc, char *argv[])
       if (thread_id < (jmax-2)%nthreads) jtsize++;
       int jltb = 1 + (jmax-2)/nthreads*thread_id+MIN((imax-2)%nthreads, thread_id);
       int jutb = jltb + jtsize -1;
-      //printf("DEBUG -- thread_id %d imax %d jtsize %d jltb %d jutb %d\n",thread_id,imax,jtsize,jltb,jutb);
 
       int ifmax = jmax*imax*10;
       int iftsize = ifmax/nthreads;
       if (thread_id < ifmax%nthreads) iftsize++;
       int ifltb = ifmax/nthreads*thread_id+MIN(ifmax%nthreads, thread_id);
       int ifutb = ifltb + iftsize -1;
-      //printf("DEBUG -- thread_id %d ifmax %d iftsize %d ifltb %d ifutb %d\n",thread_id,ifmax,iftsize,ifltb,ifutb);
 
       int jltb0 = jltb;
-      if (thread_id ==0) jltb0--;
+      if (thread_id == 0) jltb0--;
       int jutb0 = jutb;
-      if (thread_id ==nthreads-1) jutb0++;
-      //printf("DEBUG -- thread_id %d jltb0 %d jutb0 %d\n",thread_id,jltb0,jutb0);
+      if (thread_id == nthreads-1) jutb0++;
 
-      int kmin = jmax/2-5;
-      int kmax = jmax/2+5;
-      //printf("DEBUG -- thread_id %d kmin %d kmax %d\n",thread_id,kmin,kmax);
-      kmin = MAX(kmin,jltb);
-      kmax = MIN(kmax,jutb);
-      //printf("DEBUG -- thread_id %d kmin %d kmax %d\n",thread_id,kmin,kmax);
+      int kmin = MAX(jmax/2-5,jltb);
+      int kmax = MIN(jmax/2+5,jutb);
 
       if (thread_id == 0) cpu_timer_start(&tstart_init);
       for (int j = jltb0; j < jutb0; j++){
@@ -70,7 +63,6 @@ int main(int argc, char *argv[])
       }
 #pragma omp flush(x)
       if (thread_id == 0) init_time += cpu_timer_stop(tstart_init);
-
 
       for (int iter = 0; iter < 10000; iter++){
          if (thread_id ==0) cpu_timer_start(&tstart_flush);
