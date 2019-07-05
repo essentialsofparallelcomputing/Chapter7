@@ -23,8 +23,8 @@ if ("${CMAKE_C_COMPILER_ID}" STREQUAL "Clang") # using Clang
 elseif ("${CMAKE_C_COMPILER_ID}" STREQUAL "GNU") # using GCC
    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -march=native -mtune=native")
    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fstrict-aliasing -fno-tree-vectorize -fopenmp")
-   set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fopt-info-loop-optimized -fopt-info-loop-missed")
-   set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fopt-info-omp-optimized -fopt-info-omp-missed")
+   set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fopt-info-loop-optimized")
+   set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fopt-info-vec-optimized")
 elseif ("${CMAKE_C_COMPILER_ID}" STREQUAL "Intel") # using Intel C
    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -no-vec -ansi-alias -xHost -qopenmp")
 elseif (CMAKE_C_COMPILER_ID MATCHES "MSVC")
