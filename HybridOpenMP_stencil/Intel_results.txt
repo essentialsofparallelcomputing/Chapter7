@@ -1,0 +1,25 @@
+Running with 2 thread(s)
+Iter 0
+Iter 1000
+Iter 2000
+Iter 3000
+Iter 4000
+Iter 5000
+Iter 6000
+Iter 7000
+Iter 8000
+Iter 9000
+Timing is init 0.012034 flush 0.001891 stencil 29.499305 total 29.514236
+
+Running with 2 thread(s)
+Iter 0
+Iter 1000
+Iter 2000
+Iter 3000
+Iter 4000
+Iter 5000
+Iter 6000
+Iter 7000
+Iter 8000
+Iter 9000
+Timing is init 0.008200 flush 0.002119 stencil 15.862824 total 15.874129
