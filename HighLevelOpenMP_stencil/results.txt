@@ -1,0 +1,54 @@
+Running with 88 thread(s)
+Iter 0
+Iter 1000
+Iter 2000
+Iter 3000
+Iter 4000
+Iter 5000
+Iter 6000
+Iter 7000
+Iter 8000
+Iter 9000
+Timing is init 0.003701 flush 12.654886 stencil 6.231474 total 18.893729
+
+
+Running with 88 thread(s)
+Iter 0
+Iter 1000
+Iter 2000
+Iter 3000
+Iter 4000
+Iter 5000
+Iter 6000
+Iter 7000
+Iter 8000
+Iter 9000
+Timing is init 0.003022 flush 12.432031 stencil 5.774387 total 18.214331
+
+
+Running with 88 thread(s)
+Iter 0
+Iter 1000
+Iter 2000
+Iter 3000
+Iter 4000
+Iter 5000
+Iter 6000
+Iter 7000
+Iter 8000
+Iter 9000
+Timing is init 0.003495 flush 12.279935 stencil 5.536936 total 17.826343
+
+
+Running with 88 thread(s)
+Iter 0
+Iter 1000
+Iter 2000
+Iter 3000
+Iter 4000
+Iter 5000
+Iter 6000
+Iter 7000
+Iter 8000
+Iter 9000
+Timing is init 0.003300 flush 11.737317 stencil 6.040320 total 17.789446
