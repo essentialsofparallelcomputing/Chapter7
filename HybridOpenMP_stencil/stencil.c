@@ -46,7 +46,6 @@ int main(int argc, char *argv[])
       }
       if (thread_id == 0) init_time += cpu_timer_stop(tstart_init);
 
-
       for (int iter = 0; iter < 10000; iter++){
          if (thread_id ==0) cpu_timer_start(&tstart_flush);
 #ifdef OMP_SIMD
