@@ -25,6 +25,7 @@ add_executable(HelloOpenMP_fix1 HelloOpenMP_fix1.c)
 add_executable(HelloOpenMP_fix2 HelloOpenMP_fix2.c)
 add_executable(HelloOpenMP_fix3 HelloOpenMP_fix3.c)
 add_executable(HelloOpenMP_fix4 HelloOpenMP_fix4.c)
+add_executable(HelloOpenMP_fix5 HelloOpenMP_fix5.c)
 
 # Cleanup
 add_custom_target(distclean COMMAND rm -rf CMakeCache.txt CMakeFiles
