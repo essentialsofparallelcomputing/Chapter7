@@ -14,7 +14,7 @@ int main(int argc, char *argv[])
    #pragma omp master
       printf("Running with %d thread(s)\n",omp_get_num_threads());
 
-   struct timeval tstart_init, tstart_flush, tstart_stencil, tstart_total;
+   struct timespec tstart_init, tstart_flush, tstart_stencil, tstart_total;
    double init_time, flush_time, stencil_time, total_time;
    int imax=2002, jmax = 2002;
 

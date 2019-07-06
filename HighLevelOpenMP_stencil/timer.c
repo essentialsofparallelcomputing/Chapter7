@@ -1,18 +1,18 @@
 #include <sys/time.h>
-#include <stddef.h>
 #include "timer.h"
 
-void cpu_timer_start(struct timeval *tstart_cpu)
+void cpu_timer_start(struct timespec *tstart_cpu)
 {
-   gettimeofday(tstart_cpu, NULL);
+   clock_gettime(CLOCK_MONOTONIC, tstart_cpu);
 }
-double cpu_timer_stop(struct timeval tstart_cpu)
+double cpu_timer_stop(struct timespec tstart_cpu)
 {
-   struct timeval tstop_cpu, tresult;
-   gettimeofday(&tstop_cpu, NULL);
+   struct timespec tstop_cpu, tresult;
+   clock_gettime(CLOCK_MONOTONIC, &tstop_cpu);
    tresult.tv_sec = tstop_cpu.tv_sec - tstart_cpu.tv_sec;
-   tresult.tv_usec = tstop_cpu.tv_usec - tstart_cpu.tv_usec;
-   double result = (double)tresult.tv_sec + (double)tresult.tv_usec*1.0e-6;
+   tresult.tv_nsec = tstop_cpu.tv_nsec - tstart_cpu.tv_nsec;
+   double result = (double)tresult.tv_sec + (double)tresult.tv_nsec*1.0e-9;
 
    return(result);
 }
+
