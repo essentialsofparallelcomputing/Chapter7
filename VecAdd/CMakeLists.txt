@@ -1,5 +1,5 @@
 cmake_minimum_required (VERSION 3.0)
-project (stream_triad)
+project (vecadd)
 
 set (CMAKE_C_STANDARD 99)
 
@@ -21,12 +21,12 @@ elseif (CMAKE_C_COMPILER_ID MATCHES "Cray")
    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS}")
 endif()
 
-# Adds build target of stream_triad with source code files
-add_executable(stream_triad stream_triad.c timer.c timer.h)
-add_executable(stream_triad_opt1 stream_triad_opt1.c timer.c timer.h)
-add_executable(stream_triad_opt2 stream_triad_opt2.c timer.c timer.h)
-add_executable(stream_triad_opt3 stream_triad_opt3.c timer.c timer.h)
+# Adds build target of vecadd with source code files
+add_executable(vecadd vecadd.c timer.c timer.h)
+add_executable(vecadd_opt1 vecadd_opt1.c timer.c timer.h)
+add_executable(vecadd_opt2 vecadd_opt2.c timer.c timer.h)
+add_executable(vecadd_opt3 vecadd_opt3.c timer.c timer.h)
 
 # Cleanup
 add_custom_target(distclean COMMAND rm -rf CMakeCache.txt CMakeFiles
-                  Makefile cmake_install.cmake stream_triad.dSYM ipo_out.optrpt)
+                  Makefile cmake_install.cmake vecadd.dSYM ipo_out.optrpt)
