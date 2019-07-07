@@ -1,5 +1,5 @@
 cmake_minimum_required (VERSION 3.0)
-project (stream_triad)
+project (stencil)
 
 set (CMAKE_C_STANDARD 99)
 
@@ -46,22 +46,16 @@ elseif (CMAKE_C_COMPILER_ID MATCHES "Cray")
 
 endif()
 
-# Adds build target of stream_triad with source code files
-add_executable(stream_triad stream_triad.c timer.c timer.h)
-set_target_properties(stream_triad PROPERTIES COMPILE_FLAGS ${CMAKE_NOVEC_FLAGS})
+# Adds build target of stencil with source code files
+add_executable(stencil stencil.c timer.c timer.h malloc2D.c malloc2D.h)
+set_target_properties(stencil PROPERTIES COMPILE_FLAGS ${CMAKE_NOVEC_FLAGS})
 
-add_executable(stream_triad_opt1 stream_triad_opt1.c timer.c timer.h)
-set_target_properties(stream_triad_opt1 PROPERTIES COMPILE_FLAGS ${CMAKE_NOVEC_FLAGS})
+add_executable(stencil_opt1 stencil_opt1.c timer.c timer.h malloc2D.c malloc2D.h)
+set_target_properties(stencil_opt1 PROPERTIES COMPILE_FLAGS ${CMAKE_NOVEC_FLAGS})
 
-add_executable(stream_triad_opt2 stream_triad_opt2.c timer.c timer.h)
-set_target_properties(stream_triad_opt2 PROPERTIES COMPILE_FLAGS ${CMAKE_NOVEC_FLAGS})
-
-add_executable(stream_triad_opt3 stream_triad_opt3.c timer.c timer.h)
-set_target_properties(stream_triad_opt3 PROPERTIES COMPILE_FLAGS ${CMAKE_NOVEC_FLAGS})
-
-add_executable(stream_triad_opt4 stream_triad_opt4.c timer.c timer.h)
-set_target_properties(stream_triad_opt4 PROPERTIES COMPILE_FLAGS ${CMAKE_NOVEC_FLAGS})
+add_executable(stencil_opt2 stencil_opt2.c timer.c timer.h malloc2D.c malloc2D.h)
+set_target_properties(stencil_opt2 PROPERTIES COMPILE_FLAGS ${CMAKE_NOVEC_FLAGS})
 
 # Cleanup
 add_custom_target(distclean COMMAND rm -rf CMakeCache.txt CMakeFiles
-                  Makefile cmake_install.cmake stream_triad.dSYM ipo_out.optrpt)
+                  Makefile cmake_install.cmake stencil.dSYM ipo_out.optrpt)

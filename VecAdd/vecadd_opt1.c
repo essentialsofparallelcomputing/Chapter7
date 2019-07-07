@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <time.h>
+#include <omp.h>
 #include "timer.h"
 
 // large enough to force into main memory
@@ -9,6 +10,10 @@ static double a[ARRAY_SIZE], b[ARRAY_SIZE], c[ARRAY_SIZE];
 void vector_add(double *c, double *a, double *b, int n);
 
 int main(int argc, char *argv[]){
+   #pragma omp parallel
+      if (omp_get_thread_num() == 0)
+         printf("Running with %d thread(s)\n",omp_get_num_threads());
+
    struct timespec tstart;
    double time_sum = 0.0;
    for (int i=0; i<ARRAY_SIZE; i++) {

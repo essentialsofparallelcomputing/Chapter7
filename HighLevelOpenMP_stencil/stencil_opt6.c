@@ -1,10 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <sys/time.h>
+#include <time.h>
+#include <omp.h>
 
 #include "malloc2D.h"
 #include "timer.h"
-#include <omp.h>
 
 #define SWAP_PTR(xnew,xold,xtmp) (xtmp=xnew, xnew=xold, xold=xtmp)
 #define MIN(a,b) ((a) < (b) ? (a) : (b))

@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "omp.h"
+#include <omp.h>
 
 int main(int argc, char *argv[]){
    printf("Goodbye slow serial world and Hello OpenMP!\n");

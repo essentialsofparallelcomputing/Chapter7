@@ -1,5 +1,6 @@
 #include <stdio.h>
-#include <sys/time.h>
+#include <time.h>
+#include <omp.h>
 #include "timer.h"
 
 #define NTIMES 16
@@ -8,6 +9,10 @@
 static double a[STREAM_ARRAY_SIZE], b[STREAM_ARRAY_SIZE], c[STREAM_ARRAY_SIZE];
 
 int main(int argc, char *argv[]){
+   #pragma omp parallel
+      if (omp_get_thread_num() == 0)
+         printf("Running with %d thread(s)\n",omp_get_num_threads());
+
    struct timespec tstart;
    // initializing data and arrays
    double scalar = 3.0, time_sum = 0.0;
