@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <sys/time.h>
+#include <time.h>
 #include "timer.h"
 
 // large enough to force into main memory
@@ -25,8 +25,6 @@ int main(int argc, char *argv[]){
 #pragma omp master
       time_sum += cpu_timer_stop(tstart);
    }
-   // to keep the compiler from optimizing out the loop
-   c[1]=c[2];
 
    printf("Runtime is %lf msecs\n", time_sum);
 }
