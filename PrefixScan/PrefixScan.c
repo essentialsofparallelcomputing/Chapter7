@@ -62,7 +62,7 @@ void PrefixScan (int *input, int *output, int length)
    int tbegin = length * ( thread_id     ) / nthreads;
    int tend   = length * ( thread_id + 1 ) / nthreads;
 
-   // Only perform this operation if there is a postive number of entries.
+   // Only perform this operation if there is a positive number of entries.
    if ( tbegin < tend ) {
        // Do an exclusive scan for each thread
        output[tbegin] = 0;
@@ -96,6 +96,6 @@ void PrefixScan (int *input, int *output, int length)
 #pragma omp simd
    for ( int i = tbegin + 1 ; i < tend ; i++ ) {
       output[i] += output[tbegin];
-    }
+   }
 #endif
 }
