@@ -16,32 +16,37 @@ int main(int argc, char *argv[]){
    struct timespec tstart;
    double time_serial, time_threaded;
    // large enough to force into main memory
-#define ARRAY_SIZE 80000000
-   int *input, *output;
-   input  = (int *)malloc(ARRAY_SIZE*sizeof(int));
+#define ARRAY_SIZE 8000000
+   int *input_serial, *input_threaded, *output;
+   input_serial = (int *)malloc(ARRAY_SIZE*sizeof(int));
+   input_threaded = (int *)malloc(ARRAY_SIZE*sizeof(int));
    output = (int *)malloc(ARRAY_SIZE*sizeof(int));
+   for (int i=0; i<ARRAY_SIZE; i++) {
+      input_serial[i] = 1+i%2;
+   }
 #pragma omp parallel for
    for (int i=0; i<ARRAY_SIZE; i++) {
-      input[i] = 1+i%2;
+      input_threaded[i] = 1+i%2;
    }
 
    cpu_timer_start(&tstart);
-   PrefixScan(input, output, ARRAY_SIZE);
+   PrefixScan(input_serial, output, ARRAY_SIZE);
    time_serial += cpu_timer_stop(tstart);
    cpu_timer_start(&tstart);
 #pragma omp parallel
-   PrefixScan(input, output, ARRAY_SIZE);
+   PrefixScan(input_threaded, output, ARRAY_SIZE);
 
 // for (int i=0; i<ARRAY_SIZE; i++){
-//    printf("DEBUG -- i %d input value %d scan value %d\n",i,input[i],output[i]);
-//    if (i>0 && output[i]-output[i-1] != input[i-1])
-//       printf("       DEBUG -- i %d input value %d scan value %d\n",i,input[i],output[i]);
+//    printf("DEBUG -- i %d input value %d scan value %d\n",i,input_threaded[i],output[i]);
+//    if (i>0 && output[i]-output[i-1] != input_threaded[i-1])
+//       printf("       DEBUG -- i %d input value %d scan value %d\n",i,input_threaded[i],output[i]);
 // }
    time_threaded = cpu_timer_stop(tstart);
 
    printf("Runtime is for serial %lf threaded %lf speedup %lf msecs\n",
       time_serial, time_threaded, time_serial/time_threaded);
-   free(input);
+   free(input_serial);
+   free(input_threaded);
    free(output);
 }
 
