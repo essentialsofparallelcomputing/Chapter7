@@ -51,6 +51,7 @@ int main(int argc, char *argv[])
       stencil_time += cpu_timer_stop(tstart_stencil);
 
       SWAP_PTR(xnew, x, xtmp);
+      printf("DEBUG iter %d x[10][10] = %lf\n",iter,x[10][10]);
       if (iter%1000 == 0) printf("Iter %d\n",iter);
    }
    total_time += cpu_timer_stop(tstart_total);
