@@ -29,16 +29,12 @@ int main(int argc, char *argv[])
    {
       int thread_id = omp_get_thread_num();
       int nthreads = omp_get_num_threads();
-      int jtsize = (jmax-2)/nthreads;
-      if (thread_id < (jmax-2)%nthreads) jtsize++;
-      int jltb = 1 + (jmax-2)/nthreads*thread_id+MIN((imax-2)%nthreads, thread_id);
-      int jutb = jltb + jtsize -1;
 
-      int ifmax = jmax*imax*10;
-      int iftsize = ifmax/nthreads;
-      if (thread_id < ifmax%nthreads) iftsize++;
-      int ifltb = ifmax/nthreads*thread_id+MIN(ifmax%nthreads, thread_id);
-      int ifutb = ifltb + iftsize -1;
+      int jltb = 1 + (jmax-2) * ( thread_id     ) / nthreads;
+      int jutb =     (jmax-2) * ( thread_id + 1 ) / nthreads;
+
+      int ifltb = (jmax*imax*10) * ( thread_id     ) / nthreads;
+      int ifutb = (jmax*imax*10) * ( thread_id + 1 ) / nthreads;
 
       int jltb0 = jltb;
       if (thread_id == 0) jltb0--;
