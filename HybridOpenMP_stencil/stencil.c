@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
    double** xtmp;
    double** x = malloc2D(jmax, imax);
    double** xnew = malloc2D(jmax, imax);
-   int *flush = (int *)malloc(jmax*imax*sizeof(int)*10);
+   int *flush = (int *)malloc(jmax*imax*sizeof(int)*4);
 
    cpu_timer_start(&tstart_total);
 #pragma omp parallel
@@ -53,7 +53,7 @@ int main(int argc, char *argv[])
 #else
 #pragma omp for nowait
 #endif
-         for (int l = 1; l < jmax*imax*10; l++){
+         for (int l = 1; l < jmax*imax*4; l++){
             flush[l] = 1.0;
          }
          if (thread_id == 0){

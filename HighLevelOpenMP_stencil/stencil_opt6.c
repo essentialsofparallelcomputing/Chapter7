@@ -23,7 +23,7 @@ int main(int argc, char *argv[])
    double** xtmp;
    double** x = malloc2D(jmax, imax);
    double** xnew = malloc2D(jmax, imax);
-   int *flush = (int *)malloc(jmax*imax*sizeof(int)*10);
+   int *flush = (int *)malloc(jmax*imax*sizeof(int)*4);
 
    cpu_timer_start(&tstart_total);
 #pragma omp parallel
@@ -34,8 +34,8 @@ int main(int argc, char *argv[])
       int jltb = 1 + (jmax-2) * ( thread_id     ) / nthreads;
       int jutb = 1 + (jmax-2) * ( thread_id + 1 ) / nthreads;
 
-      int ifltb = (jmax*imax*10) * ( thread_id     ) / nthreads;
-      int ifutb = (jmax*imax*10) * ( thread_id + 1 ) / nthreads;
+      int ifltb = (jmax*imax*4) * ( thread_id     ) / nthreads;
+      int ifutb = (jmax*imax*4) * ( thread_id + 1 ) / nthreads;
 
       int jltb0 = jltb;
       if (thread_id == 0) jltb0--;

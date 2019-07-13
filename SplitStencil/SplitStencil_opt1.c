@@ -3,12 +3,9 @@
 #include <time.h>
 #include <omp.h>
 
-#include <math.h>
-
 #include "malloc2D.h"
 #include "timer.h"
 
-#define SWAP_PTR(xnew,xold,xtmp) (xtmp=xnew, xnew=xold, xold=xtmp)
 void SplitStencil(double **a, int imax, int jmax);
 #define MIN(a,b) ((a) < (b) ? (a) : (b))
 #define MAX(a,b) ((a) > (b) ? (a) : (b))
@@ -82,7 +79,8 @@ int main(int argc, char *argv[])
    } // end omp parallel
    total_time += cpu_timer_stop(tstart_total);
 
-   printf("Timing is init %f flush %f stencil %f total %f\n",init_time,flush_time,stencil_time,total_time);
+   printf("Timing is init %f flush %f stencil %f total %f\n",
+          init_time,flush_time,stencil_time,total_time);
 }
 
 void SplitStencil(double **a, int imax, int jmax)
@@ -114,11 +112,11 @@ void SplitStencil(double **a, int imax, int jmax)
 #pragma omp barrier
    for (int j = jltb; j < jutb; j++){
       for (int i = 1; i < imax-1; i++){
-         a[j][i] = (a[j][i]+xface[j-jltb][i]+xface[j-jltb][i-1]+yface[j][i]+yface[j-1][i])/5.0;
+         a[j][i] = (a[j][i]+xface[j-jltb][i]+xface[j-jltb][i-1]+
+                            yface[j][i]+yface[j-1][i])/5.0;
       }
    }
    free(xface);
 #pragma omp barrier
    if (thread_id == 0) free(yface);
 }
-

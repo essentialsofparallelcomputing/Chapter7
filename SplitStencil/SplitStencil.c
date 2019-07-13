@@ -51,8 +51,8 @@ int main(int argc, char *argv[])
    }
    total_time += cpu_timer_stop(tstart_total);
 
-   printf("Timing is init %f flush %f stencil %f total %f\n",init_time,flush_time,stencil_time,total_time);
-
+   printf("Timing is init %f flush %f stencil %f total %f\n",
+          init_time,flush_time,stencil_time,total_time);
 }
 
 void SplitStencil(double **a, int imax, int jmax)
@@ -64,7 +64,7 @@ void SplitStencil(double **a, int imax, int jmax)
          xface[j][i] = (a[j][i+1]+a[j][i])/2.0;
       }
    }
-   for (int j = 1; j < jmax-1; j++){
+   for (int j = 0; j < jmax-1; j++){
       for (int i = 1; i < imax-1; i++){
          yface[j][i] = (a[j+1][i]+a[j][i])/2.0;
       }
