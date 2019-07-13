@@ -14,9 +14,10 @@ int main(int argc, char *argv[])
    struct timespec tstart_init, tstart_flush, tstart_stencil, tstart_total;
    double init_time, flush_time, stencil_time, total_time;
    int imax=2002, jmax = 2002;
+   char string[60];
 
    double** a = malloc2D(jmax, imax);
-   int *flush = (int *)malloc(jmax*imax*sizeof(int)*10);
+   int *flush = (int *)malloc(jmax*imax*sizeof(int)*4);
 
    cpu_timer_start(&tstart_total);
    cpu_timer_start(&tstart_init);
@@ -35,13 +36,16 @@ int main(int argc, char *argv[])
 
    for (int iter = 0; iter < 10000; iter++){
       cpu_timer_start(&tstart_flush);
-      for (int l = 1; l < jmax*imax*10; l++){
+      for (int l = 1; l < jmax*imax*4; l++){
           flush[l] = 1.0;
       }
       flush_time += cpu_timer_stop(tstart_flush);
+      sprintf(string,"flush %d\n",flush[5]);
+      flush[1]=flush[2];
       cpu_timer_start(&tstart_stencil);
       SplitStencil(a, imax, jmax);
       stencil_time += cpu_timer_stop(tstart_stencil);
+      sprintf(string,"a %lf\n",a[5][5]);
 
       if (iter%1000 == 0) printf("Iter %d\n",iter);
    }

@@ -13,9 +13,6 @@ void SplitStencil(double **a, int imax, int jmax);
 #define MIN(a,b) ((a) < (b) ? (a) : (b))
 #define MAX(a,b) ((a) > (b) ? (a) : (b))
 
-struct timespec tstart_s0, tstart_s1, tstart_s2, tstart_s3;
-double s0_time, s1_time, s2_time, s3_time;
-
 int main(int argc, char *argv[])
 {
    #pragma omp parallel
@@ -25,14 +22,10 @@ int main(int argc, char *argv[])
    struct timespec tstart_init, tstart_flush, tstart_stencil, tstart_total;
    double init_time, flush_time, stencil_time, total_time;
    int imax=2002, jmax = 2002;
+   char string[60];
 
    double** a = malloc2D(jmax, imax);
-   int *flush = (int *)malloc(jmax*imax*sizeof(int)*10);
-
-   s0_time = 0.0;
-   s1_time = 0.0;
-   s2_time = 0.0;
-   s3_time = 0.0;
+   int *flush = (int *)malloc(jmax*imax*sizeof(int)*4);
 
    cpu_timer_start(&tstart_total);
 #pragma omp parallel
@@ -43,8 +36,8 @@ int main(int argc, char *argv[])
       int jltb = 1 + (jmax-2) * ( thread_id     ) / nthreads;
       int jutb = 1 + (jmax-2) * ( thread_id + 1 ) / nthreads;
 
-      int ifltb = (jmax*imax*10) * ( thread_id     ) / nthreads;
-      int ifutb = (jmax*imax*10) * ( thread_id + 1 ) / nthreads;
+      int ifltb = (jmax*imax*4) * ( thread_id     ) / nthreads;
+      int ifutb = (jmax*imax*4) * ( thread_id + 1 ) / nthreads;
 
       int jltb0 = jltb;
       if (thread_id == 0) jltb0--;
@@ -66,7 +59,7 @@ int main(int argc, char *argv[])
             a[j][i] = 400.0;
          }
       }
-#pragma omp flush(a)
+#pragma omp barrier
       if (thread_id == 0) init_time += cpu_timer_stop(tstart_init);
 
       for (int iter = 0; iter < 10000; iter++){
@@ -76,20 +69,20 @@ int main(int argc, char *argv[])
          }
          if (thread_id == 0){
             flush_time += cpu_timer_stop(tstart_flush);
+            sprintf(string,"flush %d\n",flush[5]);
             cpu_timer_start(&tstart_stencil);
          }
          SplitStencil(a, imax, jmax);
          if (thread_id == 0){
             stencil_time += cpu_timer_stop(tstart_stencil);
+            sprintf(string,"a %lf\n",a[5][5]);
             if (iter%1000 == 0) printf("Iter %d\n",iter);
-            if (iter%1000 == 0) printf("Timing is stencil_init %f part1 %f part2 %f part3 %f\n",s0_time, s1_time, s2_time, s3_time);
          }
       }
    } // end omp parallel
    total_time += cpu_timer_stop(tstart_total);
 
    printf("Timing is init %f flush %f stencil %f total %f\n",init_time,flush_time,stencil_time,total_time);
-
 }
 
 void SplitStencil(double **a, int imax, int jmax)
@@ -99,41 +92,33 @@ void SplitStencil(double **a, int imax, int jmax)
 
    int jltb = 1 + (jmax-2) * ( thread_id     ) / nthreads;
    int jutb = 1 + (jmax-2) * ( thread_id + 1 ) / nthreads;
-   //printf("DEBUG -- jltb %d jutb %d size %d\n",jltb,jutb,jutb-jltb+1);
 
-   int jfltb = (jmax-1) * ( thread_id     ) / nthreads;
-   int jfutb = (jmax-1) * ( thread_id + 1 ) / nthreads;
-   //printf("DEBUG -- jfltb %d jfutb %d size %d\n",jfltb,jfutb,jfutb-jfltb+1);
+   int jfltb = jltb;
+   int jfutb = jutb;
+   if (thread_id == 0) jfltb--;
 
-            if (thread_id == 0) cpu_timer_start(&tstart_s0);
    double** xface = (double **)malloc2D(jutb-jltb, imax-1);
    static double** yface;
    if (thread_id == 0) yface = (double **)malloc2D(jmax+2, imax);
 #pragma omp barrier
-            if (thread_id == 0) s0_time += cpu_timer_stop(tstart_s0);
-            if (thread_id == 0) cpu_timer_start(&tstart_s1);
    for (int j = jltb; j < jutb; j++){
       for (int i = 0; i < imax-1; i++){
          xface[j-jltb][i] = (a[j][i+1]+a[j][i])/2.0;
       }
    }
-   if (thread_id == 0) s1_time += cpu_timer_stop(tstart_s1);
-   if (thread_id == 0) cpu_timer_start(&tstart_s2);
    for (int j = jfltb; j < jfutb; j++){
       for (int i = 1; i < imax-1; i++){
          yface[j][i] = (a[j+1][i]+a[j][i])/2.0;
       }
    }
-#pragma flush(xface, yface)
-   if (thread_id == 0) s2_time += cpu_timer_stop(tstart_s2);
-   if (thread_id == 0) cpu_timer_start(&tstart_s3);
+#pragma omp barrier
    for (int j = jltb; j < jutb; j++){
       for (int i = 1; i < imax-1; i++){
          a[j][i] = (a[j][i]+xface[j-jltb][i]+xface[j-jltb][i-1]+yface[j][i]+yface[j-1][i])/5.0;
       }
    }
-   if (thread_id == 0) s3_time += cpu_timer_stop(tstart_s3);
    free(xface);
+#pragma omp barrier
    if (thread_id == 0) free(yface);
 }
 
