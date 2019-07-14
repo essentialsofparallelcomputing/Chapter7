@@ -58,7 +58,6 @@ void PrefixScan (int *input, int *output, int length)
 #endif
 
    // Compute the range for which this thread is responsible.
-   int itsize = length/nthreads;
    int tbegin = length * ( thread_id     ) / nthreads;
    int tend   = length * ( thread_id + 1 ) / nthreads;
 
