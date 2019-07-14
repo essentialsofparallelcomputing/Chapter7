@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include <stdlib.h>
 #include <omp.h>
 
@@ -47,14 +46,15 @@ double do_kahan_sum(double* restrict var, long ncells)
    // Wait until all threads get here.
 #pragma omp barrier
 
-   // Use a single thread to compute the beginning offset for each thread
+   // Use a single thread to compute the sum of all threads
    static struct esum_type global;
 #pragma omp master 
    {
       global.sum = 0.0;
       global.correction = 0.0;
       for ( int i = 0 ; i < nthreads ; i ++ ) {
-         double corrected_next_term = thread[i].sum + thread[i].correction + global.correction;
+         double corrected_next_term = thread[i].sum + thread[i].correction +
+                                      global.correction;
          double new_sum             = global.sum + global.correction;
          global.correction   = corrected_next_term - (new_sum - global.sum);
          global.sum          = new_sum;
