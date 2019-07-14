@@ -59,6 +59,9 @@ set_target_properties(stream_triad_opt2 PROPERTIES COMPILE_FLAGS ${CMAKE_NOVEC_F
 add_executable(stream_triad_opt3 stream_triad_opt3.c timer.c timer.h)
 set_target_properties(stream_triad_opt3 PROPERTIES COMPILE_FLAGS ${CMAKE_NOVEC_FLAGS})
 
+add_executable(stream_triad_opt4 stream_triad_opt4.c timer.c timer.h)
+set_target_properties(stream_triad_opt4 PROPERTIES COMPILE_FLAGS ${CMAKE_NOVEC_FLAGS})
+
 # Cleanup
 add_custom_target(distclean COMMAND rm -rf CMakeCache.txt CMakeFiles
                   Makefile cmake_install.cmake stream_triad.dSYM ipo_out.optrpt)
