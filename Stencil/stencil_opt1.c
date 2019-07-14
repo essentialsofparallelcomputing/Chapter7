@@ -39,16 +39,15 @@ int main(int argc, char *argv[])
    }
    init_time += cpu_timer_stop(tstart_init);
 
-
    for (int iter = 0; iter < 10000; iter++){
       cpu_timer_start(&tstart_flush);
-#pragma omp parallel for
+      #pragma omp parallel for
       for (int l = 1; l < jmax*imax*4; l++){
           flush[l] = 1.0;
       }
       flush_time += cpu_timer_stop(tstart_flush);
       cpu_timer_start(&tstart_stencil);
-#pragma omp parallel for
+      #pragma omp parallel for
       for (int j = 1; j < jmax-1; j++){
          for (int i = 1; i < imax-1; i++){
             xnew[j][i] = ( x[j][i] + x[j][i-1] + x[j][i+1] + x[j-1][i] + x[j+1][i] )/5.0;
@@ -61,6 +60,6 @@ int main(int argc, char *argv[])
    }
    total_time += cpu_timer_stop(tstart_total);
 
-   printf("Timing is init %f flush %f stencil %f total %f\n",init_time,flush_time,stencil_time,total_time);
-
+   printf("Timing is init %f flush %f stencil %f total %f\n",
+          init_time,flush_time,stencil_time,total_time);
 }

@@ -63,5 +63,5 @@ int main(int argc, char *argv[])
    total_time += cpu_timer_stop(tstart_total);
 
    printf("Timing is init %f flush %f stencil %f total %f\n",
-         init_time,flush_time,stencil_time,total_time);
+          init_time,flush_time,stencil_time,total_time);
 }

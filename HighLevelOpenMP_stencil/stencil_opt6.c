@@ -26,7 +26,7 @@ int main(int argc, char *argv[])
    int *flush = (int *)malloc(jmax*imax*sizeof(int)*4);
 
    cpu_timer_start(&tstart_total);
-#pragma omp parallel
+   #pragma omp parallel
    {
       int thread_id = omp_get_thread_num();
       int nthreads = omp_get_num_threads();
@@ -58,7 +58,7 @@ int main(int argc, char *argv[])
             x[j][i] = 400.0;
          }
       }
-#pragma omp flush(x)
+      #pragma omp barrier
       if (thread_id == 0) init_time += cpu_timer_stop(tstart_init);
 
       for (int iter = 0; iter < 10000; iter++){
@@ -75,17 +75,18 @@ int main(int argc, char *argv[])
                xnew[j][i] = ( x[j][i] + x[j][i-1] + x[j][i+1] + x[j-1][i] + x[j+1][i] )/5.0;
             }
          }
-#pragma omp flush(xnew)
+         #pragma omp barrier
          if (thread_id == 0){
             stencil_time += cpu_timer_stop(tstart_stencil);
 
             SWAP_PTR(xnew, x, xtmp);
             if (iter%1000 == 0) printf("Iter %d\n",iter);
          }
+         #pragma omp barrier
       }
    } // end omp parallel
    total_time += cpu_timer_stop(tstart_total);
 
-   printf("Timing is init %f flush %f stencil %f total %f\n",init_time,flush_time,stencil_time,total_time);
-
+   printf("Timing is init %f flush %f stencil %f total %f\n",
+          init_time,flush_time,stencil_time,total_time);
 }

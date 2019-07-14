@@ -5,6 +5,7 @@ set (CMAKE_C_STANDARD 99)
 
 # Set OpenMP flags for a few compilers
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -O3")
+
 if ("${CMAKE_C_COMPILER_ID}" STREQUAL "Clang") # using Clang
    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fstrict-aliasing -fopenmp -march=native -mtune=native")
    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Rpass-analysis=loop-vectorize")
@@ -13,7 +14,7 @@ if ("${CMAKE_C_COMPILER_ID}" STREQUAL "Clang") # using Clang
 
 elseif ("${CMAKE_C_COMPILER_ID}" STREQUAL "GNU") # using GCC
    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fstrict-aliasing -march=native -mtune=native -fopenmp")
-   set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fopt-info-loop-optimized")
+   set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fopt-info-vec-optimized -fopt-info-omp-optimized")
    set(CMAKE_NOVEC_FLAGS "${CMAKE_NOVEC_FLAGS} -fno-tree-vectorize")
    set(CMAKE_VEC_FLAGS "${CMAKE_VEC_FLAGS} -ftree-vectorize -mprefer-vector-width=512")
 
