@@ -15,7 +15,6 @@ double PairwiseSumByTask(double* restrict var, long ncells)
    return(sum);
 }
 
-
 double PairwiseSumBySubtask(double* restrict var, long nstart, long nend)
 {
    long nsize = nend - nstart;
@@ -25,9 +24,9 @@ double PairwiseSumBySubtask(double* restrict var, long nstart, long nend)
       return(var[nstart]);
    }
 
-   #pragma omp task shared(x) mergeable final(nend-nstart > 10)
+   #pragma omp task shared(x) mergeable final(nsize > 10)
    x = PairwiseSumBySubtask(var, nstart, nstart + nmid);
-   #pragma omp task shared(y) mergeable final(nend-nstart > 10)
+   #pragma omp task shared(y) mergeable final(nsize > 10)
    y = PairwiseSumBySubtask(var, nend - nmid, nend);
    #pragma omp taskwait
 
