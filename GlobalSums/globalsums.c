@@ -19,8 +19,11 @@ typedef unsigned int uint;
 
 int main(int argc, char *argv[])
 {
-  //for (int pow_of_two = 8; pow_of_two < 31; pow_of_two++){
-  for (int pow_of_two = 30; pow_of_two < 31; pow_of_two++){
+#pragma omp parallel
+   if (omp_get_thread_num() == 0) printf("\n  Running with %d thread(s)\n\n",omp_get_num_threads());
+
+   //for (int pow_of_two = 8; pow_of_two < 31; pow_of_two++){
+   for (int pow_of_two = 30; pow_of_two < 31; pow_of_two++){
       long ncells = (long)pow((double)2,(double)pow_of_two);
       long ncellsdiv2 = ncells/2;
 
@@ -42,9 +45,6 @@ int main(int argc, char *argv[])
       double test_sum;
       struct timespec cpu_timer;
       double cpu_time;
-
-#pragma omp parallel
-   if (omp_get_thread_num() == 0) printf("\n  Running with %d thread(s)\n\n",omp_get_num_threads());
 
 //******************************************************
 
