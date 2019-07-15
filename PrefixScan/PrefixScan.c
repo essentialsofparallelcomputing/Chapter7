@@ -76,19 +76,20 @@ void PrefixScan (int *input, int *output, int length)
    // Wait until all threads get here. 
 #pragma omp barrier
     
-   // Use a single thread to compute the beginning offset for each thread
-#pragma omp single
-   for ( int i = 1 ; i < nthreads ; i ++ ) {
-      int ibegin = length * ( i - 1 ) / nthreads;
-      int iend   = length * ( i     ) / nthreads;
+   // On the master thread compute the beginning offset for each thread
+   if (thread_id == 0) {
+      for ( int i = 1 ; i < nthreads ; i ++ ) {
+         int ibegin = length * ( i - 1 ) / nthreads;
+         int iend   = length * ( i     ) / nthreads;
 
-      if ( ibegin < iend ) 
-         output[iend] = output[ibegin] + input[iend-1];
+         if ( ibegin < iend ) 
+            output[iend] = output[ibegin] + input[iend-1];
 
-      if ( ibegin < iend - 1 )
-         output[iend] += output[iend-1];
-   } // #end pragma omp single loop
-   // Barrier is implicit from omp single
+         if ( ibegin < iend - 1 )
+            output[iend] += output[iend-1];
+      }
+   }
+#pragma omp barrier
 
    // Start all threads again
    // Apply the offset to the range for this thread.
