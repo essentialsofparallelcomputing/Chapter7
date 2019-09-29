@@ -69,7 +69,6 @@ int main(int argc, char *argv[])
                xnew[j][i] = ( x[j][i] + x[j][i-1] + x[j][i+1] + x[j-1][i] + x[j+1][i] )/5.0;
             }
          }
-         #pragma omp barrier
          if (thread_id == 0){
             stencil_time += cpu_timer_stop(tstart_stencil);
 
