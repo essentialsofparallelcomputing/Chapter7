@@ -34,11 +34,14 @@
 
 # reboot Mac system
 
+socat TCP-LISTEN:6000,reuseaddr,fork UNIX-CLIENT:\"$DISPLAY\" &
+
 # Start up xQuartz
 
 # Start up docker image with
 
-# docker run -it -e DISPLAY=host.docker.internal:0 -v /tmp/.X11-unix:/tmp/.X11-unix --entrypoint /bin/bash chapter7
+docker run -it -e DISPLAY=docker.for.mac.host.internal:0 --entrypoint /bin/bash chapter7
+##### docker run -it -e DISPLAY=host.docker.internal:0 -v /tmp/.X11-unix:/tmp/.X11-unix --entrypoint /bin/bash chapter7
 
 # Now run the GUI with
 
