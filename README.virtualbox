@@ -9,48 +9,7 @@
 # On Mac already at /Applications/VirtualBox.app/Contents/MacOS/VBoxGuestAdditions.iso
 
 # Setup new machine
-
-# Click on New
-
-# Type in a name [chapter7]
-# Select Linux and Ubuntu 64-bit
-
-# Select the amount of memory [8192]
-
-# Create a virtual hard disk now
-# Select VDI VirtualBox Disk Image
-
-# Select Fixed Size Disk
-# Select 50 GB
-
-# Should see the new virtual machine added to the list
-
-# Start Ubuntu virtual machine (Green arrow, start)
-
-# Select iso file saved earlier [ubuntu-18.04.2-desktop-amd64.iso]
-
-# Select Install Ubuntu
-
-# Keyboard -- continue
-
-# Select minimal, download updates while installing and install third-party
-
-# Select Erase disk and install Ubuntu
-# Select Install Now
-
-# Select timezone
-
-# Your name [chapter7]
-# Your computer's name [chapter7-virtualbox]
-# Username [chapter7]
-# password [chapter7]
-# Select "Require my password to log in"
-
-# Select continue
-
-# Long time ....
-
-# Installation is complete, Restart computer
+# See the README.autovirtualbox script for directions for setting up base virtual machine
 
 # sign in
 
@@ -58,29 +17,25 @@
 
 # select dots at bottom left and start up a terminal
 
-# sudo apt-get update
-# sudo apt-get install -y build-essential dkms git
-# Now go up to devices and insert virtualbox-guest-additions-iso
-
-# Make virtualbox window active and select devices from window menus at top of screen
-#     Shared Clipboard --> bidirectional
-#     Drag and Drop --> bidirectional
-#     Install guest additions (under devices pull-down)
-#     Remove optical disk -- from desktop, right click and eject or from devices-->optical disk-->remove disk from virtual drive
-#     reboot and test copy paste
-# Copy on Mac is command-C and paste in Ubuntu is shift-ctrl-v
-
 # Reboot to get cut and paste and screen size fixed
+
+# Add user to sudo list if needed
+# su
+# visudo
+# add %vboxsf ALL=(ALL) ALL
+# exit
+
+# sudo apt-get install -y git
 
 # Need script on guest to execute
 # git clone --recursive https://github.com/essentialsofparallelcomputing/Chapter7.git
 
 sudo apt-get update && \
-sudo apt-get install -y cmake git vim gcc g++ wget software-properties-common && \
+sudo apt-get install -y cmake git vim gcc g++ gfortran software-properties-common wget gnupg-agent && \
 sudo apt-get clean && \
 sudo rm -rf /var/lib/apt/lists/*
 
-# Installing latest GCC compiler (version 9) for best vectorization
+# Installing latest GCC compiler (version 9) for best OpenMP
 sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
 sudo apt-get update && \
 sudo apt-get install -y gcc-9 g++-9 gfortran-9 && \
@@ -92,7 +47,7 @@ sudo update-alternatives --install /usr/bin/gcc       gcc       /usr/bin/gcc-9 9
                          --slave   /usr/bin/gfortran  gfortran  /usr/bin/gfortran-9 \
                          --slave   /usr/bin/gcov      gcov      /usr/bin/gcov-9
 
-# Installing Intel compiler since it gives the best vectorization across compiler vendors
+# Installing Intel compiler since it gives the best threading performance across compiler vendors
 pushd /tmp
 wget -q https://apt.repos.intel.com/intel-gpg-keys/GPG-PUB-KEY-INTEL-SW-PRODUCTS-2023.PUB
 sudo apt-key add GPG-PUB-KEY-INTEL-SW-PRODUCTS-2023.PUB
@@ -119,3 +74,4 @@ sudo rm -rf /var/lib/apt/lists/*
 source /opt/intel/inteloneapi/setvars.sh
 echo "source /opt/intel/inteloneapi/setvars.sh" >> ${HOME}/.bash_profile
 
+cd Chapter7; #make

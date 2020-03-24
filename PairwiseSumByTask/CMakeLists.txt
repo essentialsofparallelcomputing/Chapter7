@@ -56,6 +56,8 @@ add_executable(PairwiseSumByTask globalsums.c PairwiseSumByTask.c timer.c timer.
 set_target_properties(PairwiseSumByTask PROPERTIES COMPILE_FLAGS ${CMAKE_VEC_FLAGS})
 set_target_properties(PairwiseSumByTask PROPERTIES COMPILE_FLAGS ${OpenMP_C_FLAGS})
 set_target_properties(PairwiseSumByTask PROPERTIES LINK_FLAGS "${OpenMP_C_FLAGS}")
+target_link_libraries(PairwiseSumByTask -lm)
+
 
 # Cleanup
 add_custom_target(distclean COMMAND rm -rf CMakeCache.txt CMakeFiles
