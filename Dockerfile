@@ -1,11 +1,11 @@
 FROM ubuntu:18.04 AS builder
 WORKDIR /project
 RUN apt-get update && \
-    apt-get install -y cmake git vim gcc g++ software-properties-common wget gnupg-agent && \
+    apt-get install -y cmake git vim gcc g++ gfortran software-properties-common wget gnupg-agent && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-# Installing latest GCC compiler (version 9) for best vectorization
+# Installing latest GCC compiler (version 9)
 RUN add-apt-repository ppa:ubuntu-toolchain-r/test
 RUN apt-get update && \
     apt-get install -y gcc-9 g++-9 gfortran-9 && \
@@ -17,8 +17,8 @@ RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-9 90\
                         --slave /usr/bin/gfortran gfortran /usr/bin/gfortran-9\
                         --slave /usr/bin/gcov gcov /usr/bin/gcov-9
 
-# Installing Intel compilers since they give the best vectorization among compiler vendors
-# Also installing Intel Advisor to look at vectorization performance
+# Installing Intel compilers since they give the best threading performance among compiler vendors
+# Also installing Intel Instpector to detect race conditions
 RUN wget -q https://apt.repos.intel.com/intel-gpg-keys/GPG-PUB-KEY-INTEL-SW-PRODUCTS-2023.PUB
 RUN apt-key add GPG-PUB-KEY-INTEL-SW-PRODUCTS-2023.PUB
 RUN rm -f GPG-PUB-KEY-INTEL-SW-PRODUCTS-2023.PUB
@@ -53,5 +53,8 @@ RUN chown -R chapter7:chapter7 /home/chapter7
 USER chapter7
 
 RUN git clone --recursive https://github.com/essentialsofparallelcomputing/Chapter7.git
+
+WORKDIR /home/chapter7/Chapter7
+RUN make
 
 ENTRYPOINT ["bash"]
