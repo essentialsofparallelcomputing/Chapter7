@@ -1,4 +1,4 @@
-all: HelloOpenMP VecAdd StreamTriad Stencil GlobalSums HighLevelOpenMP_stencil HybridOpenMP_stencil SplitStencil PrefixScan PairwiseSumByTask
+all: HelloOpenMP VecAdd StreamTriad Stencil GlobalSums Private FunctionLevel HighLevelOpenMP_stencil HybridOpenMP_stencil SplitStencil PrefixScan PairwiseSumByTask
 
 HelloOpenMP: HelloOpenMP/build/HelloOpenMP
 
@@ -24,6 +24,16 @@ GlobalSums: GlobalSums/build/globalsums
 
 GlobalSums/build/globalsums:
 	cd GlobalSums; mkdir build; cd build; cmake ..; make; ./globalsums
+
+Private: Private/build/Private
+
+Private/build/Private:
+	cd Private; mkdir build; cd build; cmake ..; make; ./Private
+
+FunctionLevel: FunctionLevel/build/FunctionLevel
+
+FunctionLevel/build/FunctionLevel:
+	cd FunctionLevel; mkdir build; cd build; cmake ..; make; ./FunctionLevel; ./FunctionLevelFort
 
 HighLevelOpenMP_stencil: HighLevelOpenMP_stencil/build/stencil_opt2
 
@@ -56,6 +66,8 @@ clean:
 	cd StreamTriad; rm -rf build
 	cd Stencil; rm -rf build
 	cd GlobalSums; rm -rf build
+	cd Private; rm -rf build
+	cd FunctionLevel; rm -rf build
 	cd HighLevelOpenMP_stencil; rm -rf build
 	cd HybridOpenMP_stencil; rm -rf build
 	cd SplitStencil; rm -rf build
