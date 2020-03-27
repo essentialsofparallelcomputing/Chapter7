@@ -1,11 +1,16 @@
-# Chapter7
+# Chapter7 OpenMP that performs
 This is from Chapter 7 of the Parallel and High Performance Computing, Robey and Zamora,
- Manning Publications, available at http://manning.com
+Manning Publications, available at http://manning.com
 
-Copyright 2019 Robert Robey, Yuliana Zamora, and Manning Publications.
+The book may be obtained at
+   http://www.manning.com/?a_aid=ParallelComputingRobey
+
+Copyright 2019 Robert Robey, Yuliana Zamora, and Manning Publications
 Emails: brobey@earthlink.net, yzamora215@gmail.com
 
-A very simple OpenMP program
+See License.txt for licensing information.
+
+OpenMP programs
    Requirements: a compiler that supports OpenMP. Most compilers have it built in
 
    HelloOpenMP (Book: listing 7.1-7.6)

@@ -18,7 +18,7 @@ RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-9 90\
                         --slave /usr/bin/gcov gcov /usr/bin/gcov-9
 
 # Installing Intel compilers since they give the best threading performance among compiler vendors
-# Also installing Intel Instpector to detect race conditions
+# Also installing Intel Inspector to detect race conditions
 RUN wget -q https://apt.repos.intel.com/intel-gpg-keys/GPG-PUB-KEY-INTEL-SW-PRODUCTS-2023.PUB
 RUN apt-key add GPG-PUB-KEY-INTEL-SW-PRODUCTS-2023.PUB
 RUN rm -f GPG-PUB-KEY-INTEL-SW-PRODUCTS-2023.PUB
