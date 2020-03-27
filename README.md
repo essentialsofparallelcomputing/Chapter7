@@ -1,5 +1,5 @@
 # Chapter7 OpenMP that performs
-This is from Chapter 7 of the Parallel and High Performance Computing, Robey and Zamora,
+This is from Chapter 7 of Parallel and High Performance Computing, Robey and Zamora,
 Manning Publications, available at http://manning.com
 
 The book may be obtained at
