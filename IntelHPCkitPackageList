@@ -1,0 +1,15 @@
+  intel-hpckit
+[1664 B]	intel-oneapi-icc				# Intel C Compiler
+[1824 kB]	intel-oneapi-icc-2021.1-beta04			# Intel C Compiler
+[1954 B]	intel-oneapi-icc-eclipse-cfg			# Intel C Compiler
+[3454 B]	intel-hpckit-getting-started
+[1638 B]	intel-oneapi-clck				# Intel Cluster Checker
+[21.9 MB]	intel-oneapi-clck-2021.1-beta04			# Intel Cluster Checker
+[21.5 MB]	intel-oneapi-condaindex				# Intel Python Libraries
+[1666 B]	intel-oneapi-ifort				# Intel Fortran Compiler
+[30.3 MB]	intel-oneapi-ifort-2021.1-beta04		# Intel Fortran Compiler
+[58.3 kB]	intel-oneapi-ifort-common-2021.1-beta04		# Intel Fortran Compiler
+[553 kB]	intel-oneapi-ifort-runtime-2021.1-beta04	# Intel Fortran Compiler
+[68.8 MB]	intel-oneapi-inspector				# Intel Thread Inspector
+[1646 B]	intel-oneapi-itac				# Intel Trace and Analysis Collector
+[41.6 MB]	intel-oneapi-itac-2021.1-beta04			# Intel Trace and Analysis Collector

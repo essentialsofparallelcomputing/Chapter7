@@ -6,7 +6,7 @@
 
 #define MIN(a,b) ((a) < (b) ? (a) : (b))
 
-void PrefixScan (int *input , int *output , int length);
+void PrefixScan (int *input, int *output, int length);
 
 int main(int argc, char *argv[]){
    #pragma omp parallel

@@ -1,5 +1,5 @@
 cmake_minimum_required (VERSION 3.0)
-project (PairwiseSumByTask)
+project (private)
 
 set (CMAKE_C_STANDARD 99)
 
@@ -51,14 +51,12 @@ endif()
 
 find_package(OpenMP)
 
-# Adds build target of PairwiseSumByTask with source code files
-add_executable(PairwiseSumByTask globalsums.c PairwiseSumByTask.c timer.c timer.h)
-set_target_properties(PairwiseSumByTask PROPERTIES COMPILE_FLAGS ${CMAKE_VEC_FLAGS})
-set_target_properties(PairwiseSumByTask PROPERTIES COMPILE_FLAGS ${OpenMP_C_FLAGS})
-set_target_properties(PairwiseSumByTask PROPERTIES LINK_FLAGS "${OpenMP_C_FLAGS}")
-target_link_libraries(PairwiseSumByTask -lm)
-
+# Adds build target of private with source code files
+add_executable(private private.c)
+set_target_properties(private PROPERTIES COMPILE_FLAGS ${CMAKE_NOVEC_FLAGS})
+set_target_properties(private PROPERTIES COMPILE_FLAGS ${OpenMP_C_FLAGS})
+set_target_properties(private PROPERTIES LINK_FLAGS "${OpenMP_C_FLAGS}")
 
 # Cleanup
 add_custom_target(distclean COMMAND rm -rf CMakeCache.txt CMakeFiles
-                  Makefile cmake_install.cmake PairwiseSumByTask.dSYM ipo_out.optrpt)
+                  Makefile cmake_install.cmake private.dSYM ipo_out.optrpt)

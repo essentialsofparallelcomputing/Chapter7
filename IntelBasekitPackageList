@@ -1,0 +1,65 @@
+  intel-basekit
+[3450 B]	intel-basekit-getting-started
+[196 MB]	intel-oneapi-advisor				# Intel Advisor
+[1654 B]	intel-oneapi-ccl				# Intel Collective Communications Library
+[2111 kB]	intel-oneapi-ccl-2021.1-beta04			# Intel Collective Communications Library
+[2304 B]	intel-oneapi-common-licensing
+[43.4 kB]	intel-oneapi-common-licensing-2021.1-beta04
+[3932 B]	intel-oneapi-common-vars
+[12.1 MB]	intel-oneapi-compiler-shared-2021.1-beta04
+[87.5 MB]	intel-oneapi-compiler-shared-common-2021.1-beta04
+[13.3 MB]	intel-oneapi-compiler-shared-common-runtime-2021.1-beta04
+[5587 kB]	intel-oneapi-compiler-shared-runtime-2021.1-beta04
+[2400 B]	intel-oneapi-daal				# Intel Data Analytics Acceleration Library
+[71.9 MB]	intel-oneapi-daal-2021.1-beta04			# Intel Data Analytics Acceleration Library
+[14.3 kB]	intel-oneapi-daal-common-2021.1-beta04		# Intel Data Analytics Acceleration Library
+[14.6 MB]	intel-oneapi-daal-common-devel-2021.1-beta04	# Intel Data Analytics Acceleration Library
+[1862 B]	intel-oneapi-daal-devel				# Intel Data Analytics Acceleration Library
+[70.4 MB]	intel-oneapi-daal-devel-2021.1-beta04		# Intel Data Analytics Acceleration Library
+[2308 B]	intel-oneapi-dev-utilities
+[12.8 MB]	intel-oneapi-dev-utilities-2021.1-beta04
+[1874 B]	intel-oneapi-dev-utilities-eclipse-cfg
+[157 MB]	intel-oneapi-dnnl				# Intel Deep Neural Network Library
+[117 kB]	intel-oneapi-dnnl-devel				# Intel Deep Neural Network Library
+[1652 B]	intel-oneapi-dpcpp-compiler			# Intel Data Parallel C++ Compiler
+[425 MB]	intel-oneapi-dpcpp-compiler-2021.1-beta04	# Intel Data Parallel C++ Compiler
+[1938 B]	intel-oneapi-dpcpp-compiler-eclipse-cfg		# Intel Data Parallel C++ Compiler
+[2322 B]	intel-oneapi-dpcpp-ct				# Intel Data Parallel C++ Compiler
+[8308 kB]	intel-oneapi-dpcpp-ct-2021.1-beta04		# Intel Data Parallel C++ Compiler
+[1928 B]	intel-oneapi-dpcpp-ct-eclipse-cfg		# Intel Data Parallel C++ Compiler
+[2296 B]	intel-oneapi-dpcpp-debugger			# Intel Data Parallel C++ Compiler
+[134 MB]	intel-oneapi-dpcpp-debugger-8.3-beta04		# Intel Data Parallel C++ Compiler
+[679 kB]	intel-oneapi-icc-common-2021.1-beta04		# Intel C Compiler
+[69.9 MB]	intel-oneapi-icc-dpcpp-shared-2021.1-beta04	# Intel C Compiler
+[14.3 kB]	intel-oneapi-icc-runtime-2021.1-beta04		# Intel C Compiler
+[2400 B]	intel-oneapi-ipp				# Intel Parallel Primitives
+[62.9 MB]	intel-oneapi-ipp-2021.1-beta04			# Intel Parallel Primitives
+[9744 B]	intel-oneapi-ipp-common-2021.1-beta04		# Intel Parallel Primitives
+[6820 kB]	intel-oneapi-ipp-common-devel-2021.1-beta04	# Intel Parallel Primitives
+[1864 B]	intel-oneapi-ipp-devel				# Intel Parallel Primitives
+[136 MB]	intel-oneapi-ipp-devel-2021.1-beta04		# Intel Parallel Primitives
+[1670 B]	intel-oneapi-libdpstd-devel			# Intel Data Parallel C++ Standard Library
+[80.9 kB]	intel-oneapi-libdpstd-devel-2021.1-beta04	# Intel Data Parallel C++ Standard Library
+[1862 B]	intel-oneapi-mkl				# Intel Math Kernel Library
+[151 MB]	intel-oneapi-mkl-2021.1-beta04			# Intel Math Kernel Library
+[15.8 kB]	intel-oneapi-mkl-common-2021.1-beta04		# Intel Math Kernel Library
+[3826 kB]	intel-oneapi-mkl-common-devel-2021.1-beta04	# Intel Math Kernel Library
+[1692 B]	intel-oneapi-mkl-devel				# Intel Math Kernel Library
+[144 MB]	intel-oneapi-mkl-devel-2021.1-beta04		# Intel Math Kernel Library
+[1648 B]	intel-oneapi-mpi				# Intel MPI
+[10.9 MB]	intel-oneapi-mpi-2021.1-beta04			# Intel MPI
+[1640 B]	intel-oneapi-mpi-devel				# Intel MPI
+[10.9 MB]	intel-oneapi-mpi-devel-2021.1-beta04		# Intel MPI
+[111 MB]	intel-oneapi-onevpl-2021.1-beta04		# Intel Video Processing Library
+[2316 B]	intel-oneapi-onevpl-devel			# Intel Video Processing Library
+[44.7 MB]	intel-oneapi-onevpl-devel-2021.1-beta04		# Intel Video Processing Library
+[2428 B]	intel-oneapi-openmp				# Intel OpenMP
+[10.7 MB]	intel-oneapi-openmp-2021.1-beta04		# Intel OpenMP
+[214 MB]	intel-oneapi-python				# Intel Python
+[1844 B]	intel-oneapi-tbb				# Intel Threaded Building Blocks
+[1465 kB]	intel-oneapi-tbb-2021.1-beta04			# Intel Threaded Building Blocks
+[15.1 kB]	intel-oneapi-tbb-common-2021.1-beta04		# Intel Threaded Building Blocks
+[303 kB]	intel-oneapi-tbb-common-devel-2021.1-beta04	# Intel Threaded Building Blocks
+[1862 B]	intel-oneapi-tbb-devel				# Intel Threaded Building Blocks
+[1386 kB]	intel-oneapi-tbb-devel-2021.1-beta04		# Intel Threaded Building Blocks
+[432 MB]	intel-oneapi-vtune				# Intel VTune
