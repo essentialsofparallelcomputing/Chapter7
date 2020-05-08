@@ -26,7 +26,7 @@ int main(int argc, char *argv[]){
 
 #pragma omp master
       cpu_timer_start(&tstart);
-      vector_add(c, a, b, ARRAY_SIZE);
+   vector_add(c, a, b, ARRAY_SIZE);
 #pragma omp master
       time_sum += cpu_timer_stop(tstart);
    } // end of omp parallel
