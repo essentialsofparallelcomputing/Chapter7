@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <time.h>
 #include "timer.h"
 
 // large enough to force into main memory
