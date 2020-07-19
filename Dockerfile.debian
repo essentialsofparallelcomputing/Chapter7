@@ -1,9 +1,21 @@
 FROM debian:bullseye
 WORKDIR /project
-RUN apt-get update -q && \
-    apt-get install -q -y cmake git vim gcc g++ gfortran software-properties-common wget gnupg-agent && \
+RUN apt-get update -q && DEBIAN_FRONTEND=noninteractive \
+    apt-get install -q -y --no-install-recommends cmake git vim gcc g++ gfortran software-properties-common wget gnupg-agent gnupg2 && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
+
+# Installing latest GCC compiler (version 10)
+RUN apt-get update -q && \
+    apt-get install -q -y gcc-10 g++-10 gfortran-10 && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+# We can use the update alternatives to switch between compiler versions
+RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-10 90\
+                        --slave /usr/bin/g++ g++ /usr/bin/g++-10\
+                        --slave /usr/bin/gfortran gfortran /usr/bin/gfortran-10\
+                        --slave /usr/bin/gcov gcov /usr/bin/gcov-10
 
 # Installing Intel compilers since they give the best threading performance among compiler vendors
 # Also installing Intel Inspector to detect race conditions
