@@ -25,10 +25,10 @@ GlobalSums: GlobalSums/build/globalsums
 GlobalSums/build/globalsums:
 	cd GlobalSums; mkdir build; cd build; cmake ..; make; ./globalsums
 
-Private: Private/build/Private
+Private: Private/build/private
 
-Private/build/Private:
-	cd Private; mkdir build; cd build; cmake ..; make; ./Private
+Private/build/private:
+	cd Private; mkdir build; cd build; cmake ..; make; ./private
 
 FunctionLevel: FunctionLevel/build/FunctionLevel
 
