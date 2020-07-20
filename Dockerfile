@@ -1,14 +1,15 @@
 FROM ubuntu:18.04 AS builder
 WORKDIR /project
-RUN apt-get update -q && DEBIAN_FRONTEND=noninteractive \
-    apt-get install -q -y cmake git vim gcc g++ gfortran software-properties-common wget gnupg-agent && \
+ENV DEBIAN_FRONTEND=noninteractive
+RUN apt-get -qq update && \
+    apt-get -qq install -y cmake git vim gcc g++ gfortran software-properties-common wget gnupg-agent && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
 # Installing latest GCC compiler (version 10)
 RUN add-apt-repository ppa:ubuntu-toolchain-r/test
-RUN apt-get update -q && \
-    apt-get install -q -y gcc-10 g++-10 gfortran-10 && \
+RUN apt-get -qq update && \
+    apt-get -qq install -y gcc-10 g++-10 gfortran-10 && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
@@ -25,8 +26,8 @@ RUN apt-key add GPG-PUB-KEY-INTEL-SW-PRODUCTS-2023.PUB
 RUN rm -f GPG-PUB-KEY-INTEL-SW-PRODUCTS-2023.PUB
 RUN echo "deb https://apt.repos.intel.com/oneapi all main" >> /etc/apt/sources.list.d/oneAPI.list
 RUN echo "deb [trusted=yes arch=amd64] https://repositories.intel.com/graphics/ubuntu bionic main" >> /etc/apt/sources.list.d/intel-graphics.list
-RUN apt-get update -q && \
-     apt-get install -q -y \
+RUN apt-get -qq update && \
+    apt-get -qq install -y \
              intel-hpckit-getting-started \
              intel-oneapi-common-vars \
              intel-oneapi-common-licensing \
@@ -39,8 +40,8 @@ RUN apt-get update -q && \
     rm -rf /var/lib/apt/lists/*
 
 # Needed libraries for Intel Inspector graphics user interface
-RUN apt-get update -q && \
-    apt-get install -q -y libgtk2.0-0 libxxf86vm1 libsm6 libnss3 libnss3 libx11-xcb1 libxtst6 \
+RUN apt-get -qq update && \
+    apt-get -qq install -y libgtk2.0-0 libxxf86vm1 libsm6 libnss3 libnss3 libx11-xcb1 libxtst6 \
             libasound2 libatk-bridge2.0-0 && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
