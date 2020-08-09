@@ -2,17 +2,17 @@ FROM debian:bullseye
 WORKDIR /project
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get -qq update && \
-    apt-get -qq install -y cmake git vim gcc g++ gfortran software-properties-common wget gnupg-agent gnupg2 && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+    apt-get -qq install -y cmake git vim gcc g++ gfortran software-properties-common wget gnupg-agent gnupg2
 
 # Installing latest GCC compiler (version 10)
-RUN apt-get -qq update && \
-    apt-get -qq install -y gcc-10 g++-10 gfortran-10 && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+RUN apt-get -qq install -y gcc-10 g++-10 gfortran-10
 
 # We can use the update alternatives to switch between compiler versions
+RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-9 80\
+                        --slave /usr/bin/g++ g++ /usr/bin/g++-9\
+                        --slave /usr/bin/gfortran gfortran /usr/bin/gfortran-9\
+                        --slave /usr/bin/gcov gcov /usr/bin/gcov-9
+
 RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-10 90\
                         --slave /usr/bin/g++ g++ /usr/bin/g++-10\
                         --slave /usr/bin/gfortran gfortran /usr/bin/gfortran-10\
@@ -25,8 +25,8 @@ RUN apt-key add GPG-PUB-KEY-INTEL-SW-PRODUCTS-2023.PUB
 RUN rm -f GPG-PUB-KEY-INTEL-SW-PRODUCTS-2023.PUB
 RUN echo "deb https://apt.repos.intel.com/oneapi all main" >> /etc/apt/sources.list.d/oneAPI.list
 RUN echo "deb [trusted=yes arch=amd64] https://repositories.intel.com/graphics/ubuntu bionic main" >> /etc/apt/sources.list.d/intel-graphics.list
-RUN apt-get update -q && \
-     apt-get install -q -y \
+RUN apt-get -qq update && \
+    apt-get -qq install -y \
              intel-hpckit-getting-started \
              intel-oneapi-common-vars \
              intel-oneapi-common-licensing \
@@ -34,16 +34,14 @@ RUN apt-get update -q && \
              intel-oneapi-icc \
              intel-oneapi-ifort \
              intel-oneapi-openmp \
-             intel-oneapi-inspector && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+             intel-oneapi-inspector
 
 # Needed libraries for Intel Inspector graphics user interface
 RUN apt-get -qq update && \
     apt-get -qq install -y libgtk2.0-0 libxxf86vm1 libsm6 libnss3 libnss3 libx11-xcb1 libxtst6 \
-            libasound2 libatk-bridge2.0-0 && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+            libasound2 libatk-bridge2.0-0
+
+RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
 SHELL ["/bin/bash", "-c"]
 
@@ -52,6 +50,9 @@ RUN groupadd chapter7 && useradd -m -s /bin/bash -g chapter7 chapter7
 WORKDIR /home/chapter7
 RUN chown -R chapter7:chapter7 /home/chapter7
 USER chapter7
+ENV PATH=${PATH}:/opt/intel/oneapi/advisor/2021.1-beta08/bin64
+ENV LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/opt/intel/oneapi/compiler/2021.1-beta08/linux/compiler/lib/intel64_lin
+ENV LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/opt/intel/oneapi/compiler/2021.1-beta08/linux/lib
 
 RUN git clone --recursive https://github.com/essentialsofparallelcomputing/Chapter7.git
 
