@@ -1,1 +1,1 @@
-Dockerfile.Ubuntu20.04
+Dockerfile.vnc
