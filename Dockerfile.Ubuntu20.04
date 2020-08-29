@@ -1,22 +1,56 @@
+# Part of the examples from the Parallel and High Performance Computing
+# Robey and Zamora, Manning Publications
+#   https://github.com/EssentialsofParallelComputing/Chapter7
+#
+# The built image can be found at:
+#
+#   https://hub.docker.com/r/essentialsofparallelcomputing/chapter7
+#
+# Author:
+# Bob Robey <brobey@earthlink.net>
+
 FROM ubuntu:20.04
-WORKDIR /project
-ENV DEBIAN_FRONTEND=noninteractive
+LABEL maintainer Bob Robey <brobey@earthlink.net>
+
+ARG DOCKER_LANG=en_US
+ARG DOCKER_TIMEZONE=America/Denver
+
+WORKDIR /tmp
 RUN apt-get -qq update && \
-    apt-get -qq install -y cmake git vim gcc g++ gfortran software-properties-common wget gnupg-agent gnupg2
+    DEBIAN_FRONTEND=noninteractive \
+    apt-get -qq install -y locales tzdata && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
+
+ENV LANG=$DOCKER_LANG.UTF-8 \
+    LANGUAGE=$DOCKER_LANG:UTF-8
+
+RUN ln -fs /usr/share/zoneinfo/$DOCKER_TIMEZONE /etc/localtime && \
+    locale-gen $LANG && update-locale LANG=$LANG && \
+    dpkg-reconfigure -f noninteractive locales tzdata
+
+ENV LC_ALL=$DOCKER_LANG.UTF-8
+
+RUN apt-get -qq update && \
+    DEBIAN_FRONTEND=noninteractive \
+    apt-get -qq install -y cmake git vim gcc g++ gfortran software-properties-common wget gnupg-agent gnupg2 && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Installing latest GCC compiler (version 10)
-RUN apt-get -qq install -y gcc-10 g++-10 gfortran-10
+RUN apt-get -qq update && \
+    apt-get -qq install -y gcc-10 g++-10 gfortran-10 && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# We can use the update alternatives to switch between compiler versions
-RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-9 80\
-                        --slave /usr/bin/g++ g++ /usr/bin/g++-9\
-                        --slave /usr/bin/gfortran gfortran /usr/bin/gfortran-9\
-                        --slave /usr/bin/gcov gcov /usr/bin/gcov-9
-
-RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-10 90\
-                        --slave /usr/bin/g++ g++ /usr/bin/g++-10\
-                        --slave /usr/bin/gfortran gfortran /usr/bin/gfortran-10\
-                        --slave /usr/bin/gcov gcov /usr/bin/gcov-10
+RUN update-alternatives \
+      --install /usr/bin/gcc      gcc      /usr/bin/gcc-9       80 \
+      --slave   /usr/bin/g++      g++      /usr/bin/g++-9          \
+      --slave   /usr/bin/gfortran gfortran /usr/bin/gfortran-9     \
+      --slave   /usr/bin/gcov     gcov     /usr/bin/gcov-9      && \
+    update-alternatives \
+      --install /usr/bin/gcc      gcc      /usr/bin/gcc-10      90 \
+      --slave   /usr/bin/g++      g++      /usr/bin/g++-10         \
+      --slave   /usr/bin/gfortran gfortran /usr/bin/gfortran-10    \
+      --slave   /usr/bin/gcov     gcov     /usr/bin/gcov-10     && \
+    chmod u+s /usr/bin/update-alternatives
 
 # Installing Intel compilers since they give the best threading performance among compiler vendors
 # Also installing Intel Inspector to detect race conditions
@@ -34,14 +68,14 @@ RUN apt-get -qq update && \
              intel-oneapi-icc \
              intel-oneapi-ifort \
              intel-oneapi-openmp \
-             intel-oneapi-inspector
+             intel-oneapi-inspector && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Needed libraries for Intel Inspector graphics user interface
 RUN apt-get -qq update && \
     apt-get -qq install -y libgtk2.0-0 libxxf86vm1 libsm6 libnss3 libnss3 libx11-xcb1 libxtst6 \
-            libasound2 libatk-bridge2.0-0
-
-RUN apt-get clean && rm -rf /var/lib/apt/lists/*
+            libasound2 libatk-bridge2.0-0 && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
 
 SHELL ["/bin/bash", "-c"]
 
