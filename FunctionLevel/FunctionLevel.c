@@ -13,4 +13,8 @@ void function_level_OpenMP(int n, double *y)
 
    if (thread_id == 0) x = (double *)malloc(100*sizeof(double));
    if (thread_id == 0) x1 = (double *)malloc(100*sizeof(double));
+
+// lots of code
+   if (thread_id ==0) free(x);
+   if (thread_id ==0) free(x1);
 }

@@ -80,6 +80,9 @@ int main(int argc, char *argv[])
 
    printf("Timing is init %f flush %f stencil %f total %f\n",
           init_time,flush_time,stencil_time,total_time);
+
+   free(a);
+   free(flush);
 }
 
 void SplitStencil(double **a, int imax, int jmax)

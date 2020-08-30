@@ -1,8 +1,8 @@
 #!/bin/sh
 # Sets up Ubuntu 18.04 from bare-bones installation 
 # Comment out what you don't need or run line-by-line, manually
-export DEBIAN_FRONTEND=noninteractive
 sudo apt-get -qq update && \
+DEBIAN_FRONTEND=noninteractive \
 sudo apt-get -qq install -y cmake make git vim gcc g++ gfortran software-properties-common wget gnupg-agent likwid
 
 sudo apt-get -qq install -y gcc-10 g++-10 gfortran-10

@@ -13,5 +13,8 @@ subroutine function_level_OpenMP(n, y)
 
    if (thread_id .eq. 0) allocate(x(100))
 
+!  lots of code
+
+   if (thread_id .eq. 0) deallocate(x)
 end subroutine function_level_OpenMP
 
