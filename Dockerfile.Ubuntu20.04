@@ -81,9 +81,16 @@ SHELL ["/bin/bash", "-c"]
 
 RUN groupadd chapter7 && useradd -m -s /bin/bash -g chapter7 chapter7
 
+RUN usermod -a -G video chapter7
+
 WORKDIR /home/chapter7
 RUN chown -R chapter7:chapter7 /home/chapter7
 USER chapter7
+
+ENV LANG='en_US.UTF-8'
+ENV DISPLAY :0
+ENV NVIDIA_VISIBLE_DEVICES all
+ENV NVIDIA_DRIVER_CAPABILITIES display,graphics,utility
 RUN source /opt/intel/oneapi/setvars.sh
 
 RUN git clone --recursive https://github.com/essentialsofparallelcomputing/Chapter7.git
