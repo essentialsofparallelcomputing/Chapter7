@@ -30,42 +30,48 @@
 # Need script on guest to execute
 # git clone --recursive https://github.com/essentialsofparallelcomputing/Chapter7.git
 
-DEBIAN_FRONTEND=noninteractive
 sudo apt-get -qq update && \
-sudo apt-get -qq install -y cmake git vim gcc g++ gfortran software-properties-common wget gnupg-agent gnupg2
+    DEBIAN_FRONTEND=noninteractive \
+    sudo apt-get -qq install -y cmake git vim gcc g++ gfortran software-properties-common wget gnupg-agent gnupg2
 
 # Installing latest GCC compiler (version 10) for best OpenMP
 sudo apt-get -qq install -y gcc-10 g++-10 gfortran-10
 
-sudo update-alternatives --install /usr/bin/gcc       gcc       /usr/bin/gcc-9 80 \
-                         --slave   /usr/bin/g++       g++       /usr/bin/g++-9 \
-                         --slave   /usr/bin/gfortran  gfortran  /usr/bin/gfortran-9 \
-                         --slave   /usr/bin/gcov      gcov      /usr/bin/gcov-9
+sudo update-alternatives \
+      --install /usr/bin/gcc      gcc      /usr/bin/gcc-9       80 \
+      --slave   /usr/bin/g++      g++      /usr/bin/g++-9          \
+      --slave   /usr/bin/gfortran gfortran /usr/bin/gfortran-9     \
+      --slave   /usr/bin/gcov     gcov     /usr/bin/gcov-9
+sudo update-alternatives \
+      --install /usr/bin/gcc      gcc      /usr/bin/gcc-10      90 \
+      --slave   /usr/bin/g++      g++      /usr/bin/g++-10         \
+      --slave   /usr/bin/gfortran gfortran /usr/bin/gfortran-10    \
+      --slave   /usr/bin/gcov     gcov     /usr/bin/gcov-10
+sudo chmod u+s /usr/bin/update-alternatives
 
-sudo update-alternatives --install /usr/bin/gcc       gcc       /usr/bin/gcc-10 90 \
-                         --slave   /usr/bin/g++       g++       /usr/bin/g++-10 \
-                         --slave   /usr/bin/gfortran  gfortran  /usr/bin/gfortran-10 \
-                         --slave   /usr/bin/gcov      gcov      /usr/bin/gcov-10
-
-# Installing Intel compiler since it gives the best threading performance across compiler vendors
-#pushd /tmp
-sudo wget -q https://apt.repos.intel.com/intel-gpg-keys/GPG-PUB-KEY-INTEL-SW-PRODUCTS-2023.PUB
+# Installing Intel compilers since they give the best threading performance among compiler vendors
+# Also installing Intel Inspector to detect race conditions
+wget -q https://apt.repos.intel.com/intel-gpg-keys/GPG-PUB-KEY-INTEL-SW-PRODUCTS-2023.PUB
 sudo apt-key add GPG-PUB-KEY-INTEL-SW-PRODUCTS-2023.PUB
 sudo rm -f GPG-PUB-KEY-INTEL-SW-PRODUCTS-2023.PUB
-#popd
-
-echo "deb https://apt.repos.intel.com/oneapi all main" | sudo tee /etc/apt/sources.list.d/oneAPI.list
-echo "deb [trusted=yes arch=amd64] https://repositories.intel.com/graphics/ubuntu bionic main" | sudo tee /etc/apt/sources.list.d/intel-graphics.list
+sudo echo "deb https://apt.repos.intel.com/oneapi all main" > /etc/apt/sources.list.d/oneAPI.list
+sudo echo "deb [trusted=yes arch=amd64] https://repositories.intel.com/graphics/ubuntu bionic main" > /etc/apt/sources.list.d/intel-graphics.list
 sudo apt-get -qq update && \
 sudo apt-get -qq install -y \
              intel-hpckit-getting-started \
              intel-oneapi-common-vars \
              intel-oneapi-common-licensing \
              intel-oneapi-dev-utilities \
-             intel-oneapi-icc \
+             intel-oneapi-dpcpp-cpp-compiler-pro \
              intel-oneapi-ifort \
              intel-oneapi-openmp \
              intel-oneapi-inspector
+
+RUN usermod -a -G video chapter7
+
+# Needed libraries for Intel Inspector graphics user interface
+sudo apt-get -qq install -y libgtk2.0-0 libxxf86vm1 libsm6 libnss3 libnss3 libx11-xcb1 libxtst6 \
+            libasound2 libatk-bridge2.0-0
 
 sudo apt-get clean && sudo rm -rf /var/lib/apt/lists/*
 
