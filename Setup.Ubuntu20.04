@@ -38,7 +38,7 @@ sudo apt-get -qq install -y \
              intel-oneapi-openmp \
              intel-oneapi-inspector
 
-RUN usermod -a -G video chapter7
+sudo usermod -a -G video ${USER}
 
 # Needed libraries for Intel Inspector graphics user interface
 sudo apt-get -qq install -y libgtk2.0-0 libxxf86vm1 libsm6 libnss3 libnss3 libx11-xcb1 libxtst6 \
