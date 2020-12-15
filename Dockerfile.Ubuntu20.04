@@ -65,7 +65,7 @@ RUN apt-get -qq update && \
              intel-oneapi-common-vars \
              intel-oneapi-common-licensing \
              intel-oneapi-dev-utilities \
-             intel-oneapi-dpcpp-cpp-compiler-pro \
+             intel-oneapi-compiler-dpcpp-cpp-and-cpp-classic \
              intel-oneapi-ifort \
              intel-oneapi-openmp \
              intel-oneapi-inspector && \
